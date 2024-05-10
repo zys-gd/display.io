@@ -7,7 +7,7 @@ namespace App\Domain\Event;
 readonly class Event
 {
     public function __construct(
-        private string $type,
+        private EventTypeEnum $type,
         private int $campaignId,
         private int $publisherId,
     ) {
@@ -23,7 +23,7 @@ readonly class Event
         return $this->publisherId;
     }
 
-    public function type(): string
+    public function type(): EventTypeEnum
     {
         return $this->type;
     }

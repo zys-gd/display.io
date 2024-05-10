@@ -19,7 +19,7 @@ class EventsDataSource implements EventsDataSourceInterface
         for ($i = 0; $i < 2000; $i++) {
             $r[] = new Event(
                 fake()->randomElement(
-                    array_column(EventTypeEnum::cases(), 'value')
+                    EventTypeEnum::cases()
                 ),
                 fake()->numberBetween(1, 1000),
                 fake()->numberBetween(1, 100)

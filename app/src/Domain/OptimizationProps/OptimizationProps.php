@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\OptimizationProps;
 
+use App\Domain\Event\EventTypeEnum;
+
 class OptimizationProps
 {
     public function __construct(
         private int $threshold,
         private float $ratioThreshold,
-        private string $sourceEvent,
-        private string $measuredEvent,
+        private EventTypeEnum $sourceEvent,
+        private EventTypeEnum $measuredEvent,
     ) {
     }
 
@@ -24,12 +26,12 @@ class OptimizationProps
         return $this->ratioThreshold;
     }
 
-    public function sourceEvent(): string
+    public function sourceEvent(): EventTypeEnum
     {
         return $this->sourceEvent;
     }
 
-    public function measuredEvent(): string
+    public function measuredEvent(): EventTypeEnum
     {
         return $this->measuredEvent;
     }

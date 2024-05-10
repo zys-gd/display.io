@@ -29,9 +29,9 @@ class CampaignDataSource implements CampaignDataSourceInterface
                     fake()->numberBetween(1, 90),
                     fake()->numberBetween(1, 20),
                     fake()->randomElement(
-                        array_column(EventTypeEnum::cases(), 'value')
+                        EventTypeEnum::cases()
                     ),
-                    EventTypeEnum::Purchase->value,
+                    EventTypeEnum::Purchase,
                 ),
                 array_unique($publisherIds)
             );
