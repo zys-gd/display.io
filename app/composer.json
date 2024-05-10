@@ -1,0 +1,29 @@
+{
+    "name": "zys-gd/display.io",
+    "description": "Test task",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yurii Zakharenko"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "require": {
+        "pestphp/pest-plugin-faker": "^2.0",
+        "pestphp/pest": "^2.34"
+    }
+}

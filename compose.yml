@@ -1,0 +1,9 @@
+services:
+  php:
+    build:
+      dockerfile: docker/Dockerfile
+    environment:
+      PHP_IDE_CONFIG: serverName=display.io
+    volumes:
+      - ./app:/var/www
+      - ./docker/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
