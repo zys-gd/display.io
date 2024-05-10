@@ -39,7 +39,7 @@ class Campaign
         return $this->id;
     }
 
-    public function processEvent(int $campaignId, int $publisherId, string $type): void
+    public function collectEvent(int $campaignId, int $publisherId, string $type): void
     {
         if ($campaignId === $this->id && $type === $this->optProps->sourceEvent()) {
             isset($this->processedEvents[$publisherId][$this->optProps->sourceEvent()])
@@ -54,7 +54,7 @@ class Campaign
         }
     }
 
-    public function processEvents(): void
+    public function processCollectedEvents(): void
     {
         foreach ($this->processedEvents as $publisherId => $events) {
             $isCrossedThreshold = isset($events[$this->optProps->sourceEvent()])

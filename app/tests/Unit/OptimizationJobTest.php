@@ -8,8 +8,5 @@ test('example', function () {
         new CampaignDataSource(),
         new EventsDataSource()
     );
-    $before = microtime(true);
-    $job->run();
-    $after = microtime(true);
-    expect($after-$before)->toBeLessThan(0.36);
+    expect($job->run())->toBeLessThan(0.04);
 });

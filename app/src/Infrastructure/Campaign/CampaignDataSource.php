@@ -8,19 +8,22 @@ use App\Domain\Campaign\Campaign;
 use App\Domain\Campaign\CampaignDataSourceInterface;
 use App\Domain\Event\EventTypeEnum;
 use App\Domain\OptimizationProps\OptimizationProps;
-use Generator;
 
+use function array_unique;
 use function Pest\Faker\fake;
 
 class CampaignDataSource implements CampaignDataSourceInterface
 {
-    public function &getCampaigns(): Generator
+    // this realisation only for test purpose!
+    public function &getCampaigns(): array
     {
-        // this realisation only for test purpose!
+        $r = [];
         $publisherIds = [];
         for ($i = 0; $i < 100; $i++) {
-            $publisherIds[] = $i;
-            yield new Campaign(
+            $publisherIds[] = fake()->numberBetween(1, 100);
+        }
+        for ($i = 0; $i < 1000; $i++) {
+            $r[] = new Campaign(
                 $i,
                 new OptimizationProps(
                     fake()->numberBetween(1, 90),
@@ -30,8 +33,10 @@ class CampaignDataSource implements CampaignDataSourceInterface
                     ),
                     EventTypeEnum::Purchase->value,
                 ),
-                $publisherIds
+                array_unique($publisherIds)
             );
         }
+
+        return $r;
     }
 }

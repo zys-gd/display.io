@@ -18,9 +18,11 @@ class OptimizationJob
     ) {
     }
 
-    public function run(): void
+    public function run(): float
     {
         $campaigns = $this->campaignDataSource->getCampaigns();
+        $eventsSince = $this->eventsDataSource->getEventsSince("2 weeks ago");
+        $before = microtime(true);
 
         /** @var array<int, Campaign> $formattedCampaigns */
         $formattedCampaigns = [];
@@ -28,9 +30,9 @@ class OptimizationJob
             $formattedCampaigns[$campaign->id()] = $campaign;
         }
 
-        foreach ($this->eventsDataSource->getEventsSince("2 weeks ago") as &$event) {
+        foreach ($eventsSince as &$event) {
             if (isset($formattedCampaigns[$event->campaignId()])) {
-                $formattedCampaigns[$event->campaignId()]->processEvent(
+                $formattedCampaigns[$event->campaignId()]->collectEvent(
                     $event->campaignId(),
                     $event->publisherId(),
                     $event->type()
@@ -40,7 +42,7 @@ class OptimizationJob
 
         $publisherEvents = new AppendIterator();
         foreach ($formattedCampaigns as &$campaign) {
-            $campaign->processEvents();
+            $campaign->processCollectedEvents();
             $campaign->saveBlacklist(); // basically should be out of circle, but it is ActiveRecord, right?
             $publisherEvents->append($campaign->dispatchingEvents());
         }
@@ -48,5 +50,8 @@ class OptimizationJob
         // Or we can call MailSender directly for performance.
         // But it increase coupling
         (new EventDispatcher())->dispatch($publisherEvents);
+        $after = microtime(true);
+
+        return $after - $before; // just for testing!
     }
 }

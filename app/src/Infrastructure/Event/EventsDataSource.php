@@ -7,23 +7,25 @@ namespace App\Infrastructure\Event;
 use App\Domain\Event\Event;
 use App\Domain\Event\EventsDataSourceInterface;
 use App\Domain\Event\EventTypeEnum;
-use Generator;
 
 use function Pest\Faker\fake;
 
 class EventsDataSource implements EventsDataSourceInterface
 {
     // this realisation only for test purpose!
-    public function &getEventsSince(string $filter): Generator
+    public function &getEventsSince(string $filter): array
     {
+        $r = [];
         for ($i = 0; $i < 2000; $i++) {
-            yield new Event(
+            $r[] = new Event(
                 fake()->randomElement(
                     array_column(EventTypeEnum::cases(), 'value')
                 ),
-                fake()->numberBetween(1, 100),
+                fake()->numberBetween(1, 1000),
                 fake()->numberBetween(1, 100)
             );
         }
+
+        return $r;
     }
 }
