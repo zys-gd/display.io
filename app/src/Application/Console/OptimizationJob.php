@@ -20,9 +20,10 @@ class OptimizationJob
 
     public function run(): float
     {
+        // I putted data source results in ahead for clean measure of job's execution time
         $campaigns = $this->campaignDataSource->getCampaigns();
         $eventsSince = $this->eventsDataSource->getEventsSince("2 weeks ago");
-        $before = microtime(true);
+        $before = microtime(true);// just for testing!
 
         /** @var array<int, Campaign> $formattedCampaigns */
         $formattedCampaigns = [];
@@ -50,7 +51,7 @@ class OptimizationJob
         // Or we can call MailSender directly for performance.
         // But it increase coupling
         (new EventDispatcher())->dispatch($publisherEvents);
-        $after = microtime(true);
+        $after = microtime(true);// just for testing!
 
         return $after - $before; // just for testing!
     }
